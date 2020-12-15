@@ -3,13 +3,18 @@ import chunk from 'lodash.chunk'
 
 import { CalendarSetProps } from './typings'
 
+const DEFAULT_CHUNK = 7
+
 /**
  * @description generate calender sets
  * @example dayjs().calendarSet({ month, chunked })
  * @returns [['', 1, ..., 7], ..., ['', 1, ..., 7]]
  */
 export const calendarSet: PluginFunc<undefined> = (_options, dayjs) => {
-  ;(dayjs.prototype as any).calendarSet = function(this: Dayjs, args: CalendarSetProps) {
+  ;(dayjs.prototype as any).calendarSet = function(
+    this: Dayjs,
+    { chunked = true, ...args }: CalendarSetProps,
+  ) {
     /** total days of <month> */
     const len = this.set('date', 1)
       .set('month', args.month)
@@ -26,6 +31,6 @@ export const calendarSet: PluginFunc<undefined> = (_options, dayjs) => {
      */
     const empties = new Array(firstDayOfMonth).fill('')
     const calendarSets = empties.concat(days)
-    return args.chunked ? chunk(calendarSets) : calendarSets
+    return chunked ? chunk(calendarSets, DEFAULT_CHUNK) : calendarSets
   }
 }
