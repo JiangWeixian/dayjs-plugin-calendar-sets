@@ -1,1 +1,4 @@
-export type Name = '@aiou/ts-lib-template'
+export type CalendarSetProps = {
+  month: number
+  chunked?: boolean
+}

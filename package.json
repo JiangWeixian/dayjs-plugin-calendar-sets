@@ -1,16 +1,18 @@
 {
-  "name": "@aiou/ts-lib-template",
-  "version": "0.1.2",
-  "description": "a starter for typescript lib",
+  "name": "dayjs-plugin-calendar-sets",
+  "version": "0.0.1",
+  "description": "generate calendar set",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "repository": {
-    "url": "https://github.com/JiangWeixian/templates/tree/master/packages/ts-lib-template"
+    "url": "https://github.com/JiangWeixian/dayjs-plugin-calendar-sets"
   },
   "keywords": [
-    "webpack",
-    "loader",
-    "template"
+    "dayjs",
+    "calendar"
+  ],
+  "files": [
+    "lib"
   ],
   "watch": {
     "run_dev": {
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@types/jest": "24.0.18",
+    "@types/lodash.chunk": "^4.2.6",
     "dayjs": "^1.9.7",
     "husky": "3.0.1",
     "jest": "24.9.0",
@@ -44,7 +47,9 @@
     "typescript": "^4.1.2",
     "typescript-transform-paths": "^2.1.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash.chunk": "^4.2.0"
+  },
   "author": "JW",
   "license": "MIT",
   "scripts": {
