@@ -26,11 +26,15 @@ export const calendarSet: PluginFunc<undefined> = (_options, dayjs) => {
       this.month(args.month)
         .startOf('month')
         .day() - 1
+    const lastDayOfMonth = this.month(args.month)
+      .endOf('month')
+      .day()
     /**
      * 如果一个月的第一天是星期2，那么前面就有一个星期一的空
      */
-    const empties = new Array(firstDayOfMonth).fill('')
-    const calendarSets = empties.concat(days)
+    const beginEmpties = new Array(firstDayOfMonth).fill('')
+    const endEmpties = new Array(7 - lastDayOfMonth).fill('')
+    const calendarSets = beginEmpties.concat(days).concat(endEmpties)
     return chunked ? chunk(calendarSets, DEFAULT_CHUNK) : calendarSets
   }
 }

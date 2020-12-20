@@ -14,6 +14,6 @@ describe('calendar set', () => {
   it('each chunk length should be 7', () => {
     const now: any = dayjs()
     const sets = now.calendarSet({ month: 11 })
-    expect(sets.some(v => v.length === 7)).toBe(true)
+    expect(sets.every(v => v.length === 7)).toBe(true)
   })
 })
