@@ -20,15 +20,20 @@ export const calendarSet: PluginFunc<undefined> = (_options, dayjs) => {
       .set('month', args.month)
       .daysInMonth()
     /** array of each-day in <month> */
-    const days = new Array(len).fill(0).map((_v, i) => this.date(i + 1).format('YYYY-MM-DD'))
+    const days = new Array(len).fill(0).map((_v, i) =>
+      this.set('date', i + 1)
+        .set('month', args.month)
+        .format('YYYY-MM-DD'),
+    )
     /** get the-first-day-of-month the-day-of-week */
     const firstDayOfMonth =
-      this.month(args.month)
+      (this.month(args.month)
         .startOf('month')
-        .day() - 1
-    const lastDayOfMonth = this.month(args.month)
-      .endOf('month')
-      .day()
+        .day() || DEFAULT_CHUNK) - 1
+    const lastDayOfMonth =
+      this.month(args.month)
+        .endOf('month')
+        .day() || DEFAULT_CHUNK
     /**
      * 如果一个月的第一天是星期2，那么前面就有一个星期一的空
      */

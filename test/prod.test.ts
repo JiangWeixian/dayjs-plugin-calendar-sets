@@ -6,6 +6,6 @@ dayjs.extend(calendarSet)
 describe('calendar set', () => {
   it('12th', () => {
     const now: any = dayjs()
-    console.log(now.calendarSet({ month: 11 }))
+    console.log(now.calendarSet({ month: 1 }))
   })
 })
