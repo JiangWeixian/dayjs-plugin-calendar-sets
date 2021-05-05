@@ -1,0 +1,99 @@
+Arguments: 
+  /Users/jiangwei/.nvm/versions/node/v14.16.0/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js
+
+PATH: 
+  /Users/jiangwei/.deno/bin:/usr/local/opt/icu4c/sbin:/usr/local/opt/icu4c/bin:/Users/jiangwei/.nvm/versions/node/v14.16.0/bin:/Users/jiangwei/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  14.16.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: read ECONNRESET
+      at TLSWrap.onStreamRead (internal/stream_base_commons.js:209:20)
+
+npm manifest: 
+  {
+    "name": "dayjs-plugin-calendar-sets",
+    "version": "0.0.8",
+    "description": "generate calendar set",
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
+    "repository": {
+      "url": "https://github.com/JiangWeixian/dayjs-plugin-calendar-sets"
+    },
+    "keywords": [
+      "dayjs",
+      "calendar"
+    ],
+    "files": [
+      "lib"
+    ],
+    "watch": {
+      "run_dev": {
+        "patterns": [
+          "src"
+        ],
+        "extensions": "ts",
+        "quiet": true,
+        "legacyWatch": true,
+        "delay": 1000,
+        "runOnChangeOnly": false
+      }
+    },
+    "devDependencies": {
+      "@types/jest": "24.0.18",
+      "@types/lodash.chunk": "^4.2.6",
+      "dayjs": "^1.9.7",
+      "husky": "3.0.1",
+      "jest": "24.9.0",
+      "np": "5.0.3",
+      "npm-watch": "0.6.0",
+      "prettier": "1.18.2",
+      "pretty-quick": "1.11.1",
+      "rimraf": "3.0.0",
+      "ts-jest": "24.0.2",
+      "ts-node": "8.1.0",
+      "tslint-config-prettier": "^1.18.0",
+      "tslint-plugin-prettier": "^2.3.0",
+      "tslint-react": "^5.0.0",
+      "ttypescript": "^1.5.12",
+      "typescript": "^4.1.2",
+      "typescript-transform-paths": "^2.1.0"
+    },
+    "peerDependencies": {
+      "dayjs": "*"
+    },
+    "dependencies": {
+      "lodash.chunk": "^4.2.0",
+      "tslib": "^1.9.3"
+    },
+    "author": "JW",
+    "license": "MIT",
+    "scripts": {
+      "build": "rimraf lib && ttsc",
+      "run_dev": "rimraf lib && ttsc",
+      "dev": "npm-watch run_dev",
+      "test": "jest",
+      "pretest": "npm run build",
+      "update": "npm update && npm update --save-dev",
+      "check": "npm outdated && npm outdated --save-dev",
+      "prepublishOnly": "npm run build && np --no-cleanup --yolo --no-publish --any-branch"
+    },
+    "husky": {
+      "hooks": {
+        "pre-commit": "pretty-quick --staged"
+      }
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
