@@ -11,13 +11,21 @@ declare namespace plugin {
     instance?: Dayjs
     $month: number
     $year: number
-    reset(): void
-    next(params?: { chunked?: boolean; type?: 'year' | 'month' }): Sets
+    reset(): this
+    current<T extends boolean = true>(params?: { chunked?: T }): T extends false ? string[] : Sets
+    next<T extends boolean = true>(params?: {
+      chunked?: T
+      type?: 'year' | 'month'
+    }): T extends false ? string[] : Sets
+    prev<T extends boolean = true>(params?: {
+      chunked?: T
+      type?: 'year' | 'month'
+    }): T extends false ? string[] : Sets
     month<T extends boolean = true>(params?: {
       month?: number
       chunked?: T
       year?: number
-    }): T extends false ? string[] : Sets[]
+    }): T extends false ? string[] : Sets
     year<T extends boolean = true>(params?: {
       year?: number
       chunked?: T
@@ -29,5 +37,5 @@ declare module 'dayjs' {
   /**
    * @param time If unit is not present, time treated as number of milliseconds
    */
-  export const calendarSets: () => plugin.CalendarSets
+  export const calendarSets: (input?: plugin.CalendarSetsInput) => plugin.CalendarSets
 }

@@ -18,10 +18,31 @@ class CalendarSets implements plugin.CalendarSets {
   reset() {
     this.$month = this.instance!.month()
     this.$year = this.instance!.year()
+    return this
+  }
+
+  current({ chunked = true }: Parameters<plugin.CalendarSets['current']>[0] = { chunked: true }) {
+    return this.month({ chunked, month: this.$month, year: this.$year })
+  }
+
+  prev(
+    { chunked = true, type = 'month' }: Parameters<plugin.CalendarSets['prev']>[0] = {
+      chunked: true,
+      type: 'month',
+    },
+  ) {
+    if (type === 'year') {
+      this.$year -= 1
+    }
+    this.$month -= 1
+    return this.month({ chunked, month: this.$month, year: this.$year })
   }
 
   next(
-    { chunked, type }: Parameters<plugin.CalendarSets['next']>[0] = { chunked: true, type: 'year' },
+    { chunked = true, type = 'month' }: Parameters<plugin.CalendarSets['next']>[0] = {
+      chunked: true,
+      type: 'month',
+    },
   ) {
     if (type === 'year') {
       this.$year += 1
@@ -68,7 +89,7 @@ class CalendarSets implements plugin.CalendarSets {
     const beginEmpties = new Array(firstDayOfMonth).fill('')
     const endEmpties = new Array(7 - lastDayOfMonth).fill('')
     const calendarSets = beginEmpties.concat(days).concat(endEmpties)
-    return chunked ? chunk(calendarSets, DEFAULT_CHUNK) : calendarSets
+    return chunked ? chunk(calendarSets, DEFAULT_CHUNK) : calendarSets.filter((v) => !!v)
   }
 }
 
