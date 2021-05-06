@@ -35,6 +35,7 @@ class CalendarSets implements plugin.CalendarSets {
       this.$year -= 1
     }
     this.$month -= 1
+    this.$month = Math.max(0, this.$month)
     return this.month({ chunked, month: this.$month, year: this.$year })
   }
 
@@ -48,6 +49,7 @@ class CalendarSets implements plugin.CalendarSets {
       this.$year += 1
     }
     this.$month += 1
+    this.$month = Math.min(11, this.$month)
     return this.month({ chunked, month: this.$month, year: this.$year })
   }
 

@@ -80,12 +80,32 @@ describe('calendar set', () => {
     ).toBe(true)
   })
 
+  it('calendar set max of month is 11', () => {
+    const sets = dayjs.calendarSets({ month: 11, year: 2020 }).next()
+    expect(Array.isArray(sets)).toBe(true)
+    expect(
+      sets.every((set) => {
+        return set.every((item) => (item ? item.startsWith('2020-12') : true))
+      }),
+    ).toBe(true)
+  })
+
   it('calendar set prev should decrease month', () => {
     const sets = dayjs.calendarSets({ month: 2, year: 2020 }).prev()
     expect(Array.isArray(sets)).toBe(true)
     expect(
       sets.every((set) => {
         return set.every((item) => (item ? item.startsWith('2020-02') : true))
+      }),
+    ).toBe(true)
+  })
+
+  it('calendar set min of month is 0', () => {
+    const sets = dayjs.calendarSets({ month: 0, year: 2020 }).prev()
+    expect(Array.isArray(sets)).toBe(true)
+    expect(
+      sets.every((set) => {
+        return set.every((item) => (item ? item.startsWith('2020-01') : true))
       }),
     ).toBe(true)
   })
