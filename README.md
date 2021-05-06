@@ -3,20 +3,44 @@
 ## install
 
 ```sh
-npm install dayjs-plugin-calendar-sets --save
+npm install dayjs-plugin-calendar-sets dayjs --save
 npm install dayjs --save
 ```
 
 ## usage
 
+### `CalendarSets`
+
+```ts
+import CalendarSets from 'dayjs-plugin-calendar-sets'
+
+dayjs.extend(CalendarSets)
+const sets = dayjs.calendarSets()
+```
+
+params of `calendarSets()`
+
+- `month` - define current `month`
+- `year` - define current `year`
+
+### `month`
+
+generate array of month dates
+
 ```ts
 import dayjs from 'dayjs'
-import { calendarSet } from 'dayjs-plugin-calendar-sets'
+import CalendarSets from 'dayjs-plugin-calendar-sets'
 
-dayjs.extend(calendarSet)
+dayjs.extend(CalendarSets)
 // get 11th month data
-dayjs().calendarSet({ month: 11 })
+const sets = dayjs.calendarSets().month({ month: 11 })
 ```
+
+params is
+
+- `month`, month index start from `0`
+- `year`, current year, default is `this year`
+- `chunked`, creates an array of dates split into groups the length of `7`, default `true`
 
 will generate month data like 
 
@@ -61,3 +85,43 @@ will generate month data like
   [ '2020-12-28', '2020-12-29', '2020-12-30', '2020-12-31' ]
 ]
 ```
+
+### `year`
+
+generate `object` of year dates
+
+```ts
+// get 2020 year data
+const sets = dayjs.calendarSets().year({ year: 2020 })
+```
+
+params:
+
+- `year`, define current year
+- `chunked`, each month dates will split into groups the length of `7`, default `true`
+
+### `current`
+
+```ts
+const sets = dayjs.calendarSets().current()
+```
+
+generate array of current `year-month` dates
+
+params:
+
+- `chunked`, creates an array of dates split into groups the length of `7`, default `true`
+
+### `next` and `prev`
+
+generate array of prev or next `year-month` dates
+
+```ts
+const instance = dayjs.calendarSets({ month: 11, year: 2020 })
+instance.prev()
+instance.next()
+```
+
+- `type`, default `month`
+  - if `type` = `year`, will also `increase or decrease` year
+- `chunked`, each month dates will split into groups the length of `7`, default `true`
