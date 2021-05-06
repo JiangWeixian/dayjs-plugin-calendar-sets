@@ -34,8 +34,5 @@ declare namespace plugin {
 }
 
 declare module 'dayjs' {
-  /**
-   * @param time If unit is not present, time treated as number of milliseconds
-   */
   export const calendarSets: (input?: plugin.CalendarSetsInput) => plugin.CalendarSets
 }
