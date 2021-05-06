@@ -1,6 +1,6 @@
 {
   "name": "dayjs-plugin-calendar-sets",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "generate calendar set",
   "main": "lib/index.js",
   "typings": "src/typings/index.d.ts",
