@@ -17,9 +17,6 @@
     "noUnusedLocals": true,
     "outDir": "lib",
     "baseUrl": "./",
-    "paths": {
-      "@shared/*": ["shared/*"]
-    },
     "plugins": [
       // Transform paths in output .js files
       { "transform": "typescript-transform-paths" },

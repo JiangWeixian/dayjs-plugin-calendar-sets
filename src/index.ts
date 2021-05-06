@@ -1,7 +1,7 @@
 import { Dayjs, PluginFunc } from 'dayjs'
 import chunk from 'lodash.chunk'
 
-import plugin from './typings'
+import plugin from './typings/index'
 
 const DEFAULT_CHUNK = 7
 
