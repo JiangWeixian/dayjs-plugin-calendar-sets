@@ -44,8 +44,8 @@
     "ts-jest": "24.0.2",
     "ts-node": "8.1.0",
     "ttypescript": "^1.5.12",
-    "typescript": "^4.1.2",
-    "typescript-transform-paths": "^2.1.0"
+    "typescript": "^4.2.4",
+    "typescript-transform-paths": "^2.2.3"
   },
   "peerDependencies": {
     "dayjs": "*"
@@ -57,8 +57,8 @@
   "author": "JW",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf lib && tsc",
-    "run_dev": "rimraf lib && tsc",
+    "build": "rimraf lib && ttsc",
+    "run_dev": "rimraf lib && ttsc",
     "dev": "npm-watch run_dev",
     "test": "jest",
     "update": "npm update && npm update --save-dev",
