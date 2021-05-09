@@ -1,18 +1,23 @@
-import { Dayjs, PluginFunc } from 'dayjs'
+import dayjs, { Dayjs, PluginFunc } from 'dayjs'
 import chunk from 'lodash.chunk'
 
 import plugin from './typings/index'
 
-const DEFAULT_CHUNK = 7
+const defaultChunk = 7
+const format = (value: string) => {
+  return dayjs(value).format('YYYY-MM-DD')
+}
 
 class CalendarSets implements plugin.CalendarSets {
   instance?: Dayjs
   $month = 0
   $year = 0
+  $format = format
   constructor(instance: Dayjs, params: plugin.CalendarSetsInput) {
     this.instance = instance
     this.$month = params.month ?? this.instance!.month()
     this.$year = params.year ?? this.instance!.year()
+    this.$format = params.format ?? format
   }
 
   reset() {
@@ -33,9 +38,13 @@ class CalendarSets implements plugin.CalendarSets {
   ) {
     if (type === 'year') {
       this.$year -= 1
+    } else {
+      this.$month -= 1
+      if (this.$month < 0) {
+        this.$year -= 1
+        this.$month = 11
+      }
     }
-    this.$month -= 1
-    this.$month = Math.max(0, this.$month)
     return this.month({ chunked, month: this.$month, year: this.$year })
   }
 
@@ -47,9 +56,14 @@ class CalendarSets implements plugin.CalendarSets {
   ) {
     if (type === 'year') {
       this.$year += 1
+    } else {
+      this.$month += 1
+      if (this.$month > 11) {
+        this.$year += 1
+        this.$month = 0
+      }
     }
-    this.$month += 1
-    this.$month = Math.min(11, this.$month)
+
     return this.month({ chunked, month: this.$month, year: this.$year })
   }
 
@@ -75,28 +89,28 @@ class CalendarSets implements plugin.CalendarSets {
     /** total days of <month> */
     const len = this.instance!.set('date', 1).set('month', month).daysInMonth()
     /** array of each-day in <month> */
-    const days = new Array(len).fill(0).map((_v, i) =>
-      this.instance!.set('date', i + 1)
+    const days = new Array(len).fill(0).map((_v, i) => {
+      const date = this.instance!.set('date', i + 1)
         .year(args.year ?? this.instance!.year())
         .set('month', month)
-        .format('YYYY-MM-DD'),
-    )
+        .format('YYYY-MM-DD')
+      return this.$format(date)
+    })
     /** get the-first-day-of-month the-day-of-week */
-    const firstDayOfMonth =
-      (this.instance!.month(month).startOf('month').day() || DEFAULT_CHUNK) - 1
-    const lastDayOfMonth = this.instance!.month(month).endOf('month').day() || DEFAULT_CHUNK
+    const firstDayOfMonth = (this.instance!.month(month).startOf('month').day() || defaultChunk) - 1
+    const lastDayOfMonth = this.instance!.month(month).endOf('month').day() || defaultChunk
     /**
      * 如果一个月的第一天是星期2，那么前面就有一个星期一的空
      */
     const beginEmpties = new Array(firstDayOfMonth).fill('')
     const endEmpties = new Array(7 - lastDayOfMonth).fill('')
     const calendarSets = beginEmpties.concat(days).concat(endEmpties)
-    return chunked ? chunk(calendarSets, DEFAULT_CHUNK) : calendarSets.filter((v) => !!v)
+    return chunked ? chunk(calendarSets, defaultChunk) : calendarSets.filter((v) => !!v)
   }
 }
 
 const wrapper: PluginFunc = (_options, _Dayjs, dayjs) => {
-  ;(dayjs as any).calendarSets = (input: plugin.CalendarSetsInput = {}) => {
+  ;(dayjs as any).calendarSets = (input: plugin.CalendarSetsInput = { format }) => {
     return new CalendarSets(dayjs(), input)
   }
 }

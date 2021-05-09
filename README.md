@@ -22,6 +22,7 @@ params of `calendarSets()`
 
 - `month` - define current `month`
 - `year` - define current `year`
+- `format` - default item type of `month()`, default format into `YYYY-MM-DD`
 
 ### `month`
 
@@ -122,6 +123,8 @@ instance.prev()
 instance.next()
 ```
 
+*if increase `month=11`, will also increase `year` at same time*
+
 - `type`, default `month`
-  - if `type` = `year`, will also `increase or decrease` year
+  - if `type` = `year`, will `increase or decrease` year
 - `chunked`, each month dates will split into groups the length of `7`, default `true`

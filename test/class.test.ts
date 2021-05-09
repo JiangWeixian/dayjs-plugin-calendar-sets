@@ -4,25 +4,25 @@ import dayjs from 'dayjs'
 dayjs.extend(CalendarSets)
 
 describe('calendar set', () => {
-  it('calendar set month should return chunked array in default', () => {
+  it('method.month should return chunked array in default', () => {
     const sets = dayjs.calendarSets().month({ month: 11 })
     expect(Array.isArray(sets)).toBe(true)
     expect(sets.every((v) => Array.isArray(v))).toBe(true)
   })
 
-  it('calendar set month un-chunked array should not contain empty string', () => {
+  it('method.month un-chunked array should not contain empty string', () => {
     const sets = dayjs.calendarSets().month({ month: 11, chunked: false })
     expect(Array.isArray(sets)).toBe(true)
   })
 
-  it('calendar set month should support return array', () => {
+  it('method.month should support return array', () => {
     const sets = dayjs.calendarSets().month({ month: 11, chunked: false })
     expect(Array.isArray(sets)).toBe(true)
 
     expect(sets.every((v) => !Array.isArray(v))).toBe(true)
   })
 
-  it('calendar set month should support define year', () => {
+  it('method.month should support define year', () => {
     const sets = dayjs.calendarSets().month({ month: 11, chunked: false, year: 2020 })
     sets.forEach((item) => {
       if (item) {
@@ -31,7 +31,7 @@ describe('calendar set', () => {
     })
   })
 
-  it('calendar set year should work fine', () => {
+  it('method.year should work fine', () => {
     const sets = dayjs.calendarSets().year()
     expect(Object.keys(sets).length).toBe(12)
     Object.values(sets).forEach((data) => {
@@ -39,14 +39,14 @@ describe('calendar set', () => {
     })
   })
 
-  it('calendar set year should support disable year', () => {
+  it('method.year should support chunked=false', () => {
     const sets = dayjs.calendarSets().year({ chunked: false })
     Object.values(sets).forEach((data) => {
       expect(data.every((v) => !Array.isArray(v))).toBe(true)
     })
   })
 
-  it('calendar set year should support define year', () => {
+  it('method.year should support define year', () => {
     const sets = dayjs.calendarSets().year({ chunked: false, year: 2020 })
     sets[0].forEach((item) => {
       if (item) {
@@ -55,12 +55,19 @@ describe('calendar set', () => {
     })
   })
 
-  it('calendar set should support define default year and month', () => {
+  it('constructor should support define default year and month', () => {
     expect(dayjs.calendarSets({ month: 2, year: 2020 }).$month).toBe(2)
     expect(dayjs.calendarSets({ month: 2, year: 2020 }).$year).toBe(2020)
   })
 
-  it('calendar set current should work', () => {
+  it('constructor should support define default format', () => {
+    const instance = dayjs.calendarSets({ format: (v) => dayjs(v).valueOf() })
+    const sets = instance.month({ chunked: false })
+    expect(Array.isArray(sets)).toBe(true)
+    expect(sets.every((v) => typeof v === 'number')).toBe(true)
+  })
+
+  it('method.current should work', () => {
     const sets = dayjs.calendarSets({ month: 2, year: 2020 }).current()
     expect(Array.isArray(sets)).toBe(true)
     expect(
@@ -70,7 +77,7 @@ describe('calendar set', () => {
     ).toBe(true)
   })
 
-  it('calendar set next should increase month', () => {
+  it('method.next should increase month', () => {
     const sets = dayjs.calendarSets({ month: 2, year: 2020 }).next()
     expect(Array.isArray(sets)).toBe(true)
     expect(
@@ -80,17 +87,17 @@ describe('calendar set', () => {
     ).toBe(true)
   })
 
-  it('calendar set max of month is 11', () => {
+  it('method.next increase month=11, will also increase year', () => {
     const sets = dayjs.calendarSets({ month: 11, year: 2020 }).next()
     expect(Array.isArray(sets)).toBe(true)
     expect(
       sets.every((set) => {
-        return set.every((item) => (item ? item.startsWith('2020-12') : true))
+        return set.every((item) => (item ? item.startsWith('2021-01') : true))
       }),
     ).toBe(true)
   })
 
-  it('calendar set prev should decrease month', () => {
+  it('method.prev should decrease month', () => {
     const sets = dayjs.calendarSets({ month: 2, year: 2020 }).prev()
     expect(Array.isArray(sets)).toBe(true)
     expect(
@@ -100,27 +107,27 @@ describe('calendar set', () => {
     ).toBe(true)
   })
 
-  it('calendar set min of month is 0', () => {
+  it('method.prev decrease month=0, will also decrease year', () => {
     const sets = dayjs.calendarSets({ month: 0, year: 2020 }).prev()
     expect(Array.isArray(sets)).toBe(true)
     expect(
       sets.every((set) => {
-        return set.every((item) => (item ? item.startsWith('2020-01') : true))
+        return set.every((item) => (item ? item.startsWith('2019-12') : true))
       }),
     ).toBe(true)
   })
 
-  it('calendar set prev should support decrease year', () => {
+  it('method.prev should support decrease year', () => {
     const sets = dayjs.calendarSets({ month: 2, year: 2020 }).prev({ type: 'year' })
     expect(Array.isArray(sets)).toBe(true)
     expect(
       sets.every((set) => {
-        return set.every((item) => (item ? item.startsWith('2019-02') : true))
+        return set.every((item) => (item ? item.startsWith('2019-03') : true))
       }),
     ).toBe(true)
   })
 
-  it('calendar set reset should work', () => {
+  it('method.reset should work', () => {
     dayjs.calendarSets({ month: 2, year: 2020 }).reset()
     expect(dayjs.calendarSets({ month: 2, year: 2020 }).reset().$month).toBe(dayjs().month())
     expect(dayjs.calendarSets({ month: 2, year: 2020 }).reset().$year).toBe(dayjs().year())
