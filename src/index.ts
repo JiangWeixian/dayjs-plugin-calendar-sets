@@ -87,12 +87,12 @@ class CalendarSets implements plugin.CalendarSets {
   ): any {
     const month = args.month ?? this.instance!.month()
     /** total days of <month> */
-    const len = this.instance!.set('date', 1).set('month', month).daysInMonth()
+    const len = this.instance!.set('month', month).set('date', 1).daysInMonth()
     /** array of each-day in <month> */
     const days = new Array(len).fill(0).map((_v, i) => {
-      const date = this.instance!.set('date', i + 1)
-        .year(args.year ?? this.instance!.year())
+      const date = this.instance!.year(args.year ?? this.instance!.year())
         .set('month', month)
+        .set('date', i + 1)
         .format('YYYY-MM-DD')
       return this.$format(date)
     })
