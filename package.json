@@ -40,6 +40,7 @@
     "npm-watch": "0.6.0",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
+    "publish-police": "^0.0.3",
     "rimraf": "3.0.0",
     "ts-jest": "24.0.2",
     "ts-node": "8.1.0",
@@ -63,7 +64,7 @@
     "test": "jest",
     "update": "npm update && npm update --save-dev",
     "check": "npm outdated && npm outdated --save-dev",
-    "prepublishOnly": "npm run build && np --no-cleanup --yolo --no-publish --any-branch"
+    "prepublishOnly": "npm run build && publish-police && np --no-cleanup --yolo --no-publish --any-branch"
   },
   "husky": {
     "hooks": {
